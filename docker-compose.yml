@@ -1,8 +1,8 @@
 services:
-  invitacion-html:
+  invitacion-nimo-html:
     build: .
-    image: invitacion-html:latest
-    container_name: invitacion-html
+    image: invitacion-nimo-html:latest
+    container_name: invitacion-nimo-html
     restart: unless-stopped
     ports:
       - "8100:80"
