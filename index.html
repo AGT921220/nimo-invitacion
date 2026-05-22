@@ -149,6 +149,7 @@
             >
               <a class="btn btn--ghost" href="#fecha-hora">Fecha y horario</a>
               <a class="btn btn--ghost" href="#ubicacion">Ubicación</a>
+              <a class="btn btn--ghost" href="#menu-nimo">Menú</a>
               <a class="btn btn--ghost" href="#video-nimo">Ver platillo</a>
               <a class="btn btn--primary" href="#galeria-visual">Platillos</a>
             </nav>
@@ -202,6 +203,53 @@
                   Abrir en Google Maps
                 </a>
               </article>
+            </div>
+          </section>
+
+          <!-- Menú (CONFIG.MENU) -->
+          <section
+            class="section section--menu reveal"
+            id="menu-nimo"
+            aria-labelledby="menu-titulo"
+          >
+            <div class="section__inner section__inner--wide">
+              <div class="platillos-header" aria-hidden="true">
+                <span class="platillos-header__line"></span>
+                <span class="platillos-header__icon">◆</span>
+                <span class="platillos-header__line"></span>
+              </div>
+              <h2 class="section__title" id="menu-titulo">Platos del día</h2>
+              <p class="menu__intro" id="menu-intro">
+                Precios, guarniciones y bebidas. Elige 3 guarniciones en cada platillo.
+              </p>
+              <figure class="menu-card">
+                <div class="menu-card__visual">
+                  <img
+                    id="menu-imagen"
+                    class="menu-card__img"
+                    src="images/menu.jpeg"
+                    alt="Menú NIMO — platos del día, guarniciones y bebidas con precios"
+                    width="1194"
+                    height="1600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="menu-card__actions">
+                  <a
+                    class="btn btn--outline menu-card__btn"
+                    id="menu-ampliar"
+                    href="images/menu.jpeg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span id="menu-ampliar-texto">Ver menú completo</span>
+                  </a>
+                </div>
+                <figcaption class="menu-card__nota">
+                  Todos los platillos incluyen tajadas · Papas fritas +$20
+                </figcaption>
+              </figure>
             </div>
           </section>
 

@@ -127,6 +127,15 @@ const CONFIG = {
     },
   ],
 
+  MENU: {
+    src: "images/menu.jpeg",
+    titulo: "Platos del día",
+    intro:
+      "Precios, guarniciones y bebidas. Elige 3 guarniciones en cada platillo — todas incluyen tajadas.",
+    alt: "Menú NIMO — platos del día, guarniciones y bebidas con precios",
+    ampliarTexto: "Ver menú completo",
+  },
+
   GALERIA: {
     titulo: "Nuestros platillos",
     intro:
@@ -569,6 +578,25 @@ function initContenido() {
   }
   if (galeriaIntro && CONFIG.GALERIA?.intro) {
     galeriaIntro.textContent = CONFIG.GALERIA.intro;
+  }
+
+  const menu = CONFIG.MENU;
+  if (menu) {
+    const menuTitulo = document.getElementById("menu-titulo");
+    const menuIntro = document.getElementById("menu-intro");
+    const menuImg = document.getElementById("menu-imagen");
+    const menuBtn = document.getElementById("menu-ampliar");
+    const menuBtnTexto = document.getElementById("menu-ampliar-texto");
+    if (menuTitulo && menu.titulo) menuTitulo.textContent = menu.titulo;
+    if (menuIntro && menu.intro) menuIntro.textContent = menu.intro;
+    if (menuImg) {
+      if (menu.src) menuImg.src = menu.src;
+      if (menu.alt) menuImg.alt = menu.alt;
+    }
+    if (menuBtn && menu.src) menuBtn.href = menu.src;
+    if (menuBtnTexto && menu.ampliarTexto) {
+      menuBtnTexto.textContent = menu.ampliarTexto;
+    }
   }
 }
 

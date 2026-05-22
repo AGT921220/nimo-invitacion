@@ -1345,8 +1345,85 @@ body.wall-intro-revealed .music-player {
 }
 
 .section--gallery .section__title,
-.section--video .section__title {
+.section--video .section__title,
+.section--menu .section__title {
   margin-bottom: var(--space-sm);
+}
+
+/* Menú de platillos */
+.section--menu {
+  padding-top: var(--space-md);
+}
+
+.menu__intro {
+  margin: 0 auto var(--space-lg);
+  max-width: 40ch;
+  text-align: center;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--color-silver);
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: min(100%, 22rem);
+  width: 100%;
+}
+
+.menu-card__visual {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border-wine);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgba(184, 184, 192, 0.1);
+  background: radial-gradient(
+    ellipse 90% 75% at 50% 30%,
+    rgba(92, 31, 46, 0.35),
+    rgba(10, 9, 9, 0.98) 68%
+  );
+}
+
+.menu-card__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.menu-card__actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.menu-card__btn {
+  width: 100%;
+  max-width: 17rem;
+  margin: 0 auto;
+}
+
+.menu-card__nota {
+  margin: var(--space-md) 0 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .menu-card {
+    max-width: min(100%, 26rem);
+  }
 }
 
 .gallery__intro,
