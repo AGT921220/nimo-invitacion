@@ -945,10 +945,11 @@ body.wall-intro-revealed .music-player {
     filter: blur(6px);
     animation: heroItemIn 1s var(--ease-out-expo) both;
   }
-  .hero__enter--1 { animation-delay: 0.08s; }
-  .hero__enter--2 { animation-delay: 0.22s; }
-  .hero__enter--3 { animation-delay: 0.36s; }
-  .hero__enter--4 { animation-delay: 0.5s; }
+  .hero__enter--0 { animation-delay: 0s; }
+  .hero__enter--1 { animation-delay: 0.12s; }
+  .hero__enter--2 { animation-delay: 0.26s; }
+  .hero__enter--3 { animation-delay: 0.4s; }
+  .hero__enter--4 { animation-delay: 0.54s; }
 }
 
 @keyframes heroItemIn {
@@ -957,6 +958,15 @@ body.wall-intro-revealed .music-player {
     transform: translate3d(0, 0, 0);
     filter: blur(0);
   }
+}
+
+.hero__logo {
+  width: min(11.5rem, 72vw);
+  margin: 0 auto var(--space-md);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(184, 184, 192, 0.12);
 }
 
 .hero__invitacion {
