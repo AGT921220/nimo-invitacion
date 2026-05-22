@@ -474,24 +474,28 @@ button:focus-visible {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 7px 6px;
+  justify-content: center;
+  gap: var(--wall-gap, 8px);
+  padding: 9px 8px;
   background: #b0aaa0;
+  overflow: hidden;
 }
 
 .wall-intro__row {
   display: flex;
-  flex: 1;
-  gap: 6px;
-  min-height: 0;
+  flex: 0 0 var(--brick-h, 46px);
+  height: var(--brick-h, 46px);
+  min-height: var(--brick-h, 46px);
+  gap: var(--wall-gap, 8px);
 }
 
 .wall-intro__brick {
   flex: 1;
   min-width: 0;
+  height: 100%;
   position: relative;
   transform: rotate(var(--brick-tilt, 0deg));
-  border-radius: 2px 3px 3px 2px;
+  border-radius: 3px 5px 4px 3px;
   background: linear-gradient(
       168deg,
       var(--brick-c1, #c45a4a) 0%,

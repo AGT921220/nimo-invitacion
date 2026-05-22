@@ -161,9 +161,22 @@ function initWallIntro() {
   function crearLadrillos() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const cols = Math.max(10, Math.ceil(vw / 48));
-    const rows = Math.max(14, Math.ceil(vh / 26));
+    const gap = 8;
+    const padX = 16;
+    const padY = 18;
+    /** Proporción ancho : alto (ladrillo horizontal, no cuadrado) */
+    const aspect = 2.35;
+    const targetBrickW = 112;
+
+    const cols = Math.max(4, Math.floor((vw - padX) / targetBrickW));
+    const innerW = vw - padX - gap * Math.max(0, cols - 1);
+    const brickW = innerW / cols;
+    const brickH = Math.round(brickW / aspect);
+    const rows = Math.max(5, Math.ceil((vh - padY) / (brickH + gap)));
+
     bricksRoot.style.setProperty("--wall-cols", String(cols));
+    bricksRoot.style.setProperty("--brick-h", `${brickH}px`);
+    bricksRoot.style.setProperty("--wall-gap", `${gap}px`);
     bricksRoot.innerHTML = "";
 
     for (let r = 0; r < rows; r += 1) {
