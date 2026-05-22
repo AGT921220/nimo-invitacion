@@ -149,8 +149,8 @@
             >
               <a class="btn btn--ghost" href="#fecha-hora">Fecha y horario</a>
               <a class="btn btn--ghost" href="#ubicacion">Ubicación</a>
-              <a class="btn btn--ghost" href="#video-nimo">Video</a>
-              <a class="btn btn--primary" href="#galeria-visual">Galería</a>
+              <a class="btn btn--ghost" href="#video-nimo">Ver platillo</a>
+              <a class="btn btn--primary" href="#galeria-visual">Platillos</a>
             </nav>
           </div>
         </header>
@@ -212,21 +212,28 @@
             aria-labelledby="video-titulo"
           >
             <div class="section__inner section__inner--wide">
-              <h2 class="section__title" id="video-titulo">Vive la experiencia NIMO</h2>
+              <div class="platillos-header platillos-header--video" aria-hidden="true">
+                <span class="platillos-header__line"></span>
+                <span class="platillos-header__icon">◆</span>
+                <span class="platillos-header__line"></span>
+              </div>
+              <h2 class="section__title" id="video-titulo">Tu platillo, en acción</h2>
               <p class="video__intro" id="video-descripcion">
-                Un vistazo a los sabores que te esperan en la inauguración.
+                Un vistazo al plato recién servido — el mismo estilo que encontrarás en la inauguración.
               </p>
               <div class="video-card">
                 <video
                   id="video-nimo-player"
                   class="video-card__player"
-                  controls
+                  autoplay
+                  muted
+                  loop
                   playsinline
-                  preload="metadata"
+                  preload="auto"
                   poster="images/5.jpeg"
+                  aria-label="Video de un platillo NIMO"
                 >
                   <source src="images/c1.mp4" type="video/mp4" />
-                  Tu navegador no reproduce video HTML5.
                 </video>
               </div>
             </div>
@@ -239,13 +246,21 @@
             aria-labelledby="galeria-titulo"
           >
             <div class="section__inner section__inner--wide">
-              <h2 class="section__title" id="galeria-titulo">Galería</h2>
-              <p class="gallery__intro">Momentos que forman parte de NIMO</p>
+              <div class="platillos-header" aria-hidden="true">
+                <span class="platillos-header__line"></span>
+                <span class="platillos-header__icon">◆</span>
+                <span class="platillos-header__line"></span>
+              </div>
+              <h2 class="section__title" id="galeria-titulo">Nuestros platillos</h2>
+              <p class="gallery__intro" id="galeria-intro">
+                Cocina casera, porciones generosas y el sabor que nos distingue.
+              </p>
+              <p class="gallery__hint">Desliza para ver cada bandeja</p>
               <div
                 class="gallery__viewport"
                 tabindex="0"
                 role="region"
-                aria-label="Galería de fotografías. En pantallas pequeñas puedes deslizar horizontalmente."
+                aria-label="Platillos de NIMO. En pantallas pequeñas puedes deslizar horizontalmente."
               >
                 <div class="gallery" id="galeria-grid" role="list"></div>
               </div>

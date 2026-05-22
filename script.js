@@ -58,69 +58,87 @@ const CONFIG = {
     {
       src: "images/1.jpeg",
       alt: "Chuleta con pasta cremosa, frijoles negros y maduros",
+      etiqueta: "Chuleta con pasta",
       layout: "portrait",
       feature: true,
     },
     {
       src: "images/2.jpeg",
       alt: "Bandejas de pabellón criollo listas para servir",
+      etiqueta: "Pabellón criollo",
       layout: "portrait",
       feature: true,
     },
     {
       src: "images/3.jpeg",
       alt: "Arroz, carne mechada, huevo frito, aguacate y maduros",
+      etiqueta: "Carne mechada completa",
       layout: "landscape",
     },
     {
       src: "images/4.jpeg",
       alt: "Pollo frito crujiente con arroz, frijoles y maduros",
+      etiqueta: "Pollo frito con guarnición",
       layout: "portrait",
     },
     {
       src: "images/5.jpeg",
       alt: "Pollo a la plancha con arroz, ensalada y plátano maduro",
+      etiqueta: "Pollo a la plancha",
       layout: "portrait",
       feature: true,
     },
     {
       src: "images/6.jpeg",
       alt: "Albóndigas en salsa con arroz, frijoles y ensalada fresca",
+      etiqueta: "Albóndigas en salsa",
       layout: "portrait",
     },
     {
       src: "images/7.jpeg",
       alt: "Alitas glaseadas con pasta cremosa, frijoles y maduros",
+      etiqueta: "Alitas con pasta",
       layout: "portrait",
     },
     {
       src: "images/8.jpeg",
       alt: "Bebida de chocolate NIMO en vaso con logo",
+      etiqueta: "Chocolate NIMO",
       layout: "portrait",
     },
     {
       src: "images/9.jpeg",
       alt: "Muslo de pollo asado con ensalada de papa y maduros",
+      etiqueta: "Pollo asado",
       layout: "portrait",
     },
     {
       src: "images/10.jpeg",
       alt: "Bistec encebollado con arroz, maduros y ensalada fresca",
+      etiqueta: "Bistec encebollado",
       layout: "portrait",
     },
     {
       src: "images/11.jpeg",
       alt: "Sancocho de res con arroz, arepitas y limón",
+      etiqueta: "Sancocho de res",
       layout: "portrait",
       feature: true,
     },
   ],
 
+  GALERIA: {
+    titulo: "Nuestros platillos",
+    intro:
+      "Cocina casera, porciones generosas y el sabor que nos distingue. Así lucen las bandejas que te esperan en NIMO.",
+  },
+
   VIDEO: {
     src: "images/c1.mp4",
     poster: "images/5.jpeg",
-    titulo: "Vive la experiencia NIMO",
-    descripcion: "Un vistazo a los sabores que te esperan en la inauguración.",
+    titulo: "Tu platillo, en acción",
+    descripcion:
+      "Un vistazo al plato recién servido — el mismo estilo que encontrarás en la inauguración.",
   },
 };
 
@@ -543,6 +561,15 @@ function initContenido() {
     tel.textContent = CONFIG.TELEFONO;
     tel.href = `tel:${CONFIG.TELEFONO.replace(/\s/g, "")}`;
   }
+
+  const galeriaTitulo = document.getElementById("galeria-titulo");
+  const galeriaIntro = document.getElementById("galeria-intro");
+  if (galeriaTitulo && CONFIG.GALERIA?.titulo) {
+    galeriaTitulo.textContent = CONFIG.GALERIA.titulo;
+  }
+  if (galeriaIntro && CONFIG.GALERIA?.intro) {
+    galeriaIntro.textContent = CONFIG.GALERIA.intro;
+  }
 }
 
 function escapeHtml(str) {
@@ -577,7 +604,8 @@ function normalizeFotoGaleria(item, index) {
   }
   return {
     src: item.src,
-    alt: item.alt || `NIMO — foto ${index + 1}`,
+    alt: item.alt || `NIMO — platillo ${index + 1}`,
+    etiqueta: item.etiqueta || item.alt || `Platillo ${index + 1}`,
     layout: item.layout === "landscape" ? "landscape" : "portrait",
     feature: Boolean(item.feature),
   };
@@ -597,6 +625,7 @@ function initGaleria() {
     const featureClass = foto.feature ? " gallery__cell--feature" : "";
     const w = isLandscape ? 1000 : 800;
     const h = isLandscape ? 750 : 1000;
+    const caption = foto.etiqueta || foto.alt;
     return `
       <figure
         class="gallery__cell js-galeria-item ${layoutClass}${featureClass}"
@@ -605,21 +634,24 @@ function initGaleria() {
         style="--gallery-i: ${i}"
         tabindex="0"
       >
-        <div class="gallery__shine" aria-hidden="true"></div>
-        <div class="gallery__placeholder" aria-hidden="true">
-          <span class="gallery__placeholder-icon">◇</span>
-          <span class="gallery__placeholder-text">Foto ${i + 1}</span>
+        <div class="gallery__media">
+          <div class="gallery__shine" aria-hidden="true"></div>
+          <div class="gallery__placeholder" aria-hidden="true">
+            <span class="gallery__placeholder-icon">🍽</span>
+            <span class="gallery__placeholder-text">Platillo ${i + 1}</span>
+          </div>
+          <img
+            class="gallery__img"
+            data-gallery-index="${i}"
+            src="${escapeHtml(foto.src)}"
+            alt="${escapeHtml(foto.alt)}"
+            width="${w}"
+            height="${h}"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
-        <img
-          class="gallery__img"
-          data-gallery-index="${i}"
-          src="${escapeHtml(foto.src)}"
-          alt="${escapeHtml(foto.alt)}"
-          width="${w}"
-          height="${h}"
-          loading="lazy"
-          decoding="async"
-        />
+        <figcaption class="gallery__caption">${escapeHtml(caption)}</figcaption>
       </figure>`;
   }).join("");
 
@@ -645,17 +677,48 @@ function initGaleria() {
 function initVideo() {
   const cfg = CONFIG.VIDEO;
   const video = document.getElementById("video-nimo-player");
+  const section = document.getElementById("video-nimo");
   if (!video || !cfg?.src) return;
 
   const source = video.querySelector("source");
   if (source) source.src = cfg.src;
   if (cfg.poster) video.poster = cfg.poster;
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.setAttribute("playsinline", "");
+  video.setAttribute("muted", "");
+  video.setAttribute("loop", "");
+  video.removeAttribute("controls");
   video.load();
 
   const titulo = document.getElementById("video-titulo");
   const desc = document.getElementById("video-descripcion");
   if (titulo && cfg.titulo) titulo.textContent = cfg.titulo;
   if (desc && cfg.descripcion) desc.textContent = cfg.descripcion;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || !section) return;
+
+  const intentarPlay = () => {
+    const p = video.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  };
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) intentarPlay();
+        else video.pause();
+      });
+    },
+    { threshold: 0.35, rootMargin: "0px 0px -5% 0px" }
+  );
+
+  io.observe(section);
+  intentarPlay();
 }
 
 function initGaleriaObserver() {
