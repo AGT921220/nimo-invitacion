@@ -5,4 +5,4 @@ services:
     container_name: invitacion-nimo-html
     restart: unless-stopped
     ports:
-      - "8100:80"
+      - "8101:80"
