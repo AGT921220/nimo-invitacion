@@ -19,7 +19,7 @@
   <body>
     <!--
       EDITAR: script.js → CONFIG (fecha, horario, ubicación, teléfono, frases, fotos, maps, audio).
-      Fotos: carpeta images/ → foto1.jpg … foto4.jpg
+      Fotos y video: carpeta images/ (CONFIG.FOTOS_GALERIA y CONFIG.VIDEO)
       Música: music/piano.mp3
     -->
     <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
@@ -122,18 +122,24 @@
           </div>
           <div class="hero__frame" aria-hidden="true"></div>
           <div class="hero__inner">
+
+            <div>
             <img
               class="hero__logo hero__enter hero__enter--0"
-              src="images/logo.jpeg"
+              src="images/logo.png"
               alt="NOMO — Comer rico es tu decisión"
               width="320"
               height="320"
               decoding="async"
             />
+
+            </div>
+
+
             <p class="hero__invitacion hero__enter hero__enter--1" id="hero-invitacion">
               Te invito a la gran inauguración de Nimo Company
             </p>
-            <h1 class="hero__name hero__enter hero__enter--2" id="hero-titulo">NIMO</h1>
+            <!-- <h1 class="hero__name hero__enter hero__enter--2" id="hero-titulo">NIMO</h1> -->
             <p class="hero__tagline hero__enter hero__enter--3" id="hero-tagline">
               Será un honor compartir este momento contigo.
             </p>
@@ -143,6 +149,7 @@
             >
               <a class="btn btn--ghost" href="#fecha-hora">Fecha y horario</a>
               <a class="btn btn--ghost" href="#ubicacion">Ubicación</a>
+              <a class="btn btn--ghost" href="#video-nimo">Video</a>
               <a class="btn btn--primary" href="#galeria-visual">Galería</a>
             </nav>
           </div>
@@ -195,6 +202,33 @@
                   Abrir en Google Maps
                 </a>
               </article>
+            </div>
+          </section>
+
+          <!-- Video (CONFIG.VIDEO) -->
+          <section
+            class="section section--video reveal"
+            id="video-nimo"
+            aria-labelledby="video-titulo"
+          >
+            <div class="section__inner section__inner--wide">
+              <h2 class="section__title" id="video-titulo">Vive la experiencia NIMO</h2>
+              <p class="video__intro" id="video-descripcion">
+                Un vistazo a los sabores que te esperan en la inauguración.
+              </p>
+              <div class="video-card">
+                <video
+                  id="video-nimo-player"
+                  class="video-card__player"
+                  controls
+                  playsinline
+                  preload="metadata"
+                  poster="images/5.jpeg"
+                >
+                  <source src="images/c1.mp4" type="video/mp4" />
+                  Tu navegador no reproduce video HTML5.
+                </video>
+              </div>
             </div>
           </section>
 

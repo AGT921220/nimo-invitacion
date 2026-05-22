@@ -49,13 +49,79 @@ const CONFIG = {
 
   AUDIO_SRC: "music/piano.mp3",
 
-  /** Galería: agrega o quita rutas en images/ */
+  /**
+   * Galería en images/
+   * layout: "portrait" | "landscape" — orienta el recorte y la cuadrícula
+   * feature: true — celda más alta en escritorio (platillos destacados)
+   */
   FOTOS_GALERIA: [
-    "images/foto1.jpg",
-    "images/foto2.jpg",
-    "images/foto3.jpg",
-    "images/foto4.jpg",
+    {
+      src: "images/1.jpeg",
+      alt: "Chuleta con pasta cremosa, frijoles negros y maduros",
+      layout: "portrait",
+      feature: true,
+    },
+    {
+      src: "images/2.jpeg",
+      alt: "Bandejas de pabellón criollo listas para servir",
+      layout: "portrait",
+      feature: true,
+    },
+    {
+      src: "images/3.jpeg",
+      alt: "Arroz, carne mechada, huevo frito, aguacate y maduros",
+      layout: "landscape",
+    },
+    {
+      src: "images/4.jpeg",
+      alt: "Pollo frito crujiente con arroz, frijoles y maduros",
+      layout: "portrait",
+    },
+    {
+      src: "images/5.jpeg",
+      alt: "Pollo a la plancha con arroz, ensalada y plátano maduro",
+      layout: "portrait",
+      feature: true,
+    },
+    {
+      src: "images/6.jpeg",
+      alt: "Albóndigas en salsa con arroz, frijoles y ensalada fresca",
+      layout: "portrait",
+    },
+    {
+      src: "images/7.jpeg",
+      alt: "Alitas glaseadas con pasta cremosa, frijoles y maduros",
+      layout: "portrait",
+    },
+    {
+      src: "images/8.jpeg",
+      alt: "Bebida de chocolate NIMO en vaso con logo",
+      layout: "portrait",
+    },
+    {
+      src: "images/9.jpeg",
+      alt: "Muslo de pollo asado con ensalada de papa y maduros",
+      layout: "portrait",
+    },
+    {
+      src: "images/10.jpeg",
+      alt: "Bistec encebollado con arroz, maduros y ensalada fresca",
+      layout: "portrait",
+    },
+    {
+      src: "images/11.jpeg",
+      alt: "Sancocho de res con arroz, arepitas y limón",
+      layout: "portrait",
+      feature: true,
+    },
   ],
+
+  VIDEO: {
+    src: "images/c1.mp4",
+    poster: "images/5.jpeg",
+    titulo: "Vive la experiencia NIMO",
+    descripcion: "Un vistazo a los sabores que te esperan en la inauguración.",
+  },
 };
 
 /* ---------- Intro: pared interactiva + música tras el gesto del usuario ---------- */
@@ -500,16 +566,40 @@ function initWhatsApp() {
   link.href = `https://wa.me/${num}?text=${msg}`;
 }
 
+function normalizeFotoGaleria(item, index) {
+  if (typeof item === "string") {
+    return {
+      src: item,
+      alt: `NIMO — foto ${index + 1}`,
+      layout: "portrait",
+      feature: false,
+    };
+  }
+  return {
+    src: item.src,
+    alt: item.alt || `NIMO — foto ${index + 1}`,
+    layout: item.layout === "landscape" ? "landscape" : "portrait",
+    feature: Boolean(item.feature),
+  };
+}
+
 /* ---------- Galería dinámica con placeholders ---------- */
 function initGaleria() {
   const grid = document.getElementById("galeria-grid");
   if (!grid || !CONFIG.FOTOS_GALERIA) return;
 
-  grid.innerHTML = CONFIG.FOTOS_GALERIA.map((src, i) => {
-    const alt = `NIMO — foto ${i + 1}`;
+  grid.innerHTML = CONFIG.FOTOS_GALERIA.map((raw, i) => {
+    const foto = normalizeFotoGaleria(raw, i);
+    const isLandscape = foto.layout === "landscape";
+    const layoutClass = isLandscape
+      ? "gallery__cell--landscape"
+      : "gallery__cell--portrait";
+    const featureClass = foto.feature ? " gallery__cell--feature" : "";
+    const w = isLandscape ? 1000 : 800;
+    const h = isLandscape ? 750 : 1000;
     return `
       <figure
-        class="gallery__cell js-galeria-item"
+        class="gallery__cell js-galeria-item ${layoutClass}${featureClass}"
         role="listitem"
         data-gallery-i="${i}"
         style="--gallery-i: ${i}"
@@ -523,10 +613,10 @@ function initGaleria() {
         <img
           class="gallery__img"
           data-gallery-index="${i}"
-          src="${escapeHtml(src)}"
-          alt="${escapeHtml(alt)}"
-          width="800"
-          height="1000"
+          src="${escapeHtml(foto.src)}"
+          alt="${escapeHtml(foto.alt)}"
+          width="${w}"
+          height="${h}"
           loading="lazy"
           decoding="async"
         />
@@ -550,6 +640,22 @@ function initGaleria() {
   });
 
   initGaleriaObserver();
+}
+
+function initVideo() {
+  const cfg = CONFIG.VIDEO;
+  const video = document.getElementById("video-nimo-player");
+  if (!video || !cfg?.src) return;
+
+  const source = video.querySelector("source");
+  if (source) source.src = cfg.src;
+  if (cfg.poster) video.poster = cfg.poster;
+  video.load();
+
+  const titulo = document.getElementById("video-titulo");
+  const desc = document.getElementById("video-descripcion");
+  if (titulo && cfg.titulo) titulo.textContent = cfg.titulo;
+  if (desc && cfg.descripcion) desc.textContent = cfg.descripcion;
 }
 
 function initGaleriaObserver() {
@@ -659,6 +765,7 @@ function init() {
   initMapLinks();
   initWhatsApp();
   initGaleria();
+  initVideo();
   initReveal();
   updateCountdown();
   setInterval(updateCountdown, 1000);
