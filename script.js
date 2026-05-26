@@ -17,13 +17,16 @@ const CONFIG = {
   COUNTDOWN_TARGET: new Date(2026, 4, 31, 11, 0, 0),
 
   UBICACION: "Ocampo Market",
+  DIRECCION: "Ocampo 125 local 340",
 
-  /**
-   * Enlace exacto de Google Maps para Ocampo Market.
-   * Reemplaza la cadena vacía por la URL real cuando la tengas.
-   */
+  /** Enlace de Google Maps para Ocampo Market */
   MAPS_URL:
     "https://www.google.com/maps/search/?api=1&query=Ocampo+Market",
+
+  FOTO_LOCAL: {
+    src: "images/local.jpeg",
+    alt: "Local NIMO en Ocampo Market",
+  },
 
   /** Teléfono visible */
   TELEFONO: "9261820754",
@@ -143,8 +146,8 @@ const CONFIG = {
   },
 
   VIDEO: {
-    src: "images/c1.mp4",
-    poster: "images/5.jpeg",
+    src: "images/comiendo.jpeg",
+    alt: "Platillo NIMO",
     titulo: "Tu platillo, en acción",
     descripcion:
       "Un vistazo al plato recién servido — el mismo estilo que encontrarás en la inauguración.",
@@ -547,7 +550,15 @@ function initContenido() {
   const lugar = document.getElementById("evento-lugar");
   const ubicTexto = document.getElementById("evento-ubicacion-texto");
   if (lugar) lugar.textContent = CONFIG.UBICACION;
-  if (ubicTexto) ubicTexto.textContent = CONFIG.UBICACION;
+  if (ubicTexto) {
+    ubicTexto.textContent = CONFIG.DIRECCION || CONFIG.UBICACION;
+  }
+
+  const fotoLocal = document.getElementById("ubicacion-foto-local");
+  if (fotoLocal && CONFIG.FOTO_LOCAL?.src) {
+    fotoLocal.src = CONFIG.FOTO_LOCAL.src;
+    if (CONFIG.FOTO_LOCAL.alt) fotoLocal.alt = CONFIG.FOTO_LOCAL.alt;
+  }
 
   const invTexto = document.getElementById("invitados-texto");
   if (invTexto) invTexto.textContent = CONFIG.INVITADOS_ESPECIALES;
@@ -704,49 +715,16 @@ function initGaleria() {
 
 function initVideo() {
   const cfg = CONFIG.VIDEO;
-  const video = document.getElementById("video-nimo-player");
-  const section = document.getElementById("video-nimo");
-  if (!video || !cfg?.src) return;
+  const img = document.getElementById("video-nimo-player");
+  if (!img || !cfg?.src) return;
 
-  const source = video.querySelector("source");
-  if (source) source.src = cfg.src;
-  if (cfg.poster) video.poster = cfg.poster;
-
-  video.muted = true;
-  video.defaultMuted = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.setAttribute("playsinline", "");
-  video.setAttribute("muted", "");
-  video.setAttribute("loop", "");
-  video.removeAttribute("controls");
-  video.load();
+  img.src = cfg.src;
+  if (cfg.alt) img.alt = cfg.alt;
 
   const titulo = document.getElementById("video-titulo");
   const desc = document.getElementById("video-descripcion");
   if (titulo && cfg.titulo) titulo.textContent = cfg.titulo;
   if (desc && cfg.descripcion) desc.textContent = cfg.descripcion;
-
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion || !section) return;
-
-  const intentarPlay = () => {
-    const p = video.play();
-    if (p && typeof p.catch === "function") p.catch(() => {});
-  };
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) intentarPlay();
-        else video.pause();
-      });
-    },
-    { threshold: 0.35, rootMargin: "0px 0px -5% 0px" }
-  );
-
-  io.observe(section);
-  intentarPlay();
 }
 
 function initGaleriaObserver() {

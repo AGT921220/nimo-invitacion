@@ -19,7 +19,7 @@
   <body>
     <!--
       EDITAR: script.js → CONFIG (fecha, horario, ubicación, teléfono, frases, fotos, maps, audio).
-      Fotos y video: carpeta images/ (CONFIG.FOTOS_GALERIA y CONFIG.VIDEO)
+      Fotos: carpeta images/ (CONFIG.FOTOS_GALERIA y CONFIG.VIDEO)
       Música: music/piano.mp3
     -->
     <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
@@ -149,7 +149,7 @@
             >
               <a class="btn btn--ghost" href="#fecha-hora">Fecha y horario</a>
               <a class="btn btn--ghost" href="#ubicacion">Ubicación</a>
-              <a class="btn btn--ghost" href="#menu-nimo">Menú</a>
+              <!-- <a class="btn btn--ghost" href="#menu-nimo">Menú</a> -->
               <a class="btn btn--ghost" href="#video-nimo">Ver platillo</a>
               <a class="btn btn--primary" href="#galeria-visual">Platillos</a>
             </nav>
@@ -192,7 +192,7 @@
                   <h3 class="event-card__title" id="evento-lugar">Ocampo Market</h3>
                 </header>
                 <p class="event-card__place">Nos vemos en</p>
-                <p class="event-card__address" id="evento-ubicacion-texto">Ocampo Market</p>
+                <p class="event-card__address" id="evento-ubicacion-texto">Ocampo 125 local 340</p>
                 <!-- Edita MAPS_URL en script.js → CONFIG -->
                 <a
                   class="btn btn--outline js-map-ubicacion"
@@ -203,11 +203,21 @@
                   Abrir en Google Maps
                 </a>
               </article>
+              <figure class="ubicacion-foto">
+                <img
+                  id="ubicacion-foto-local"
+                  class="ubicacion-foto__img"
+                  src="images/local.jpeg"
+                  alt="Local NIMO en Ocampo Market"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
             </div>
           </section>
 
           <!-- Menú (CONFIG.MENU) -->
-          <section
+          <!-- <section
             class="section section--menu reveal"
             id="menu-nimo"
             aria-labelledby="menu-titulo"
@@ -251,9 +261,9 @@
                 </figcaption>
               </figure>
             </div>
-          </section>
+          </section> -->
 
-          <!-- Video (CONFIG.VIDEO) -->
+          <!-- Platillo destacado (CONFIG.VIDEO) -->
           <section
             class="section section--video reveal"
             id="video-nimo"
@@ -270,19 +280,14 @@
                 Un vistazo al plato recién servido — el mismo estilo que encontrarás en la inauguración.
               </p>
               <div class="video-card">
-                <video
+                <img
                   id="video-nimo-player"
                   class="video-card__player"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  preload="auto"
-                  poster="images/5.jpeg"
-                  aria-label="Video de un platillo NIMO"
-                >
-                  <source src="images/c1.mp4" type="video/mp4" />
-                </video>
+                  src="images/comiendo.jpeg"
+                  alt="Platillo NIMO"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
           </section>
