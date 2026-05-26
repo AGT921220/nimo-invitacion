@@ -52,6 +52,10 @@ const CONFIG = {
 
   AUDIO_SRC: "music/piano.mp3",
 
+  /** GIF de bandera en la animación de apertura de la pared */
+  BANDERA_ANIMADA: "images/venezuela2.gif",
+  BANDERA_FRASE: "De Venezuela, con sabor de hogar",
+
   /**
    * Galería en images/
    * layout: "portrait" | "landscape" — orienta el recorte y la cuadrícula
@@ -163,14 +167,26 @@ function initWallIntro() {
   const bricksRoot = document.getElementById("wall-bricks");
   const canvas = document.getElementById("wall-particles");
   const impactHost = document.getElementById("wall-impact-host");
+  const flagImg = document.getElementById("wall-flag-reveal-img");
+  const flagFrase = document.getElementById("wall-flag-frase");
   if (!gate || !wallBtn || !bricksRoot) return;
+
+  if (flagFrase && CONFIG.BANDERA_FRASE) {
+    flagFrase.textContent = CONFIG.BANDERA_FRASE;
+  }
+
+  if (flagImg && CONFIG.BANDERA_ANIMADA) {
+    flagImg.src = CONFIG.BANDERA_ANIMADA;
+    const preloadFlag = new Image();
+    preloadFlag.src = CONFIG.BANDERA_ANIMADA;
+  }
 
   const reduceMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /** Tiempo que el confeti permanece visible sobre la invitación ya revelada */
-  const CONFETTI_MS = reduceMotion ? 0 : 2600;
+  /** Tiempo que el confeti y la bandera permanecen sobre la invitación revelada */
+  const CONFETTI_MS = reduceMotion ? 0 : 5600;
 
   const CONFETTI_COLORS = [
     "#d4af37",
@@ -482,14 +498,20 @@ function initWallIntro() {
     if (reduceMotion) {
       aplicarExplosion(ix, iy);
       gate.classList.add("wall-intro--breaking");
+      if (flagImg && CONFIG.BANDERA_ANIMADA) {
+        flagImg.src = CONFIG.BANDERA_ANIMADA;
+      }
       revelarContenido();
-      window.setTimeout(cerrarIntro, 0);
+      window.setTimeout(cerrarIntro, 1200);
       return;
     }
 
     mostrarImpacto(ix, iy);
     aplicarExplosion(ix, iy);
     gate.classList.add("wall-intro--breaking");
+    if (flagImg && CONFIG.BANDERA_ANIMADA) {
+      flagImg.src = `${CONFIG.BANDERA_ANIMADA}?v=${Date.now()}`;
+    }
     revelarContenido();
     lanzarConfettiFiesta();
     lanzarParticulas(ix, iy);

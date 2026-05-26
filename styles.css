@@ -68,11 +68,18 @@ html {
   .wall-intro__flash,
   .wall-intro__burst,
   .wall-confetti__piece,
-  .wall-intro__bokeh {
+  .wall-intro__bokeh,
+  .wall-intro__scrim,
+  .wall-intro__flag-reveal {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
     animation: none !important;
+  }
+
+  .wall-intro--breaking .wall-intro__flag-reveal {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
   }
 }
 
@@ -250,10 +257,37 @@ button:focus-visible {
 
 @keyframes wallFlash {
   0% { opacity: 0; }
-  6% { opacity: 1; }
-  22% { opacity: 0.85; }
-  45% { opacity: 0.4; }
+  6% { opacity: 0.45; }
+  22% { opacity: 0.35; }
+  45% { opacity: 0.15; }
   100% { opacity: 0; }
+}
+
+.wall-intro__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: rgba(20, 17, 18, 0);
+}
+
+.wall-intro--breaking .wall-intro__scrim {
+  animation: wallScrimDim 5s ease-in-out both;
+}
+
+@keyframes wallScrimDim {
+  0% {
+    background: rgba(20, 17, 18, 0);
+  }
+  14% {
+    background: rgba(20, 17, 18, 0.38);
+  }
+  55% {
+    background: rgba(20, 17, 18, 0.42);
+  }
+  100% {
+    background: rgba(20, 17, 18, 0);
+  }
 }
 
 .wall-intro__glow-reveal {
@@ -273,13 +307,125 @@ button:focus-visible {
 }
 
 .wall-intro--breaking .wall-intro__glow-reveal {
-  animation: wallGlowReveal 1.8s var(--ease-out-expo) 0.1s both;
+  animation: wallGlowReveal 1.4s var(--ease-out-expo) 0.1s both;
+  opacity: 0.65;
 }
 
 @keyframes wallGlowReveal {
   0% { opacity: 0; transform: scale(0.8); filter: blur(8px); }
   25% { opacity: 1; transform: scale(1.08); filter: blur(0); }
   100% { opacity: 0; transform: scale(1.25); filter: blur(4px); }
+}
+
+.wall-intro__flag-reveal {
+  position: absolute;
+  left: var(--impact-x, 50%);
+  top: var(--impact-y, 48%);
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: min(88vw, 16rem);
+  transform: translate(-50%, -50%) scale(0.25);
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.55));
+}
+
+.wall-intro__flag-frase {
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--color-cream);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  border-radius: 999px;
+  background: rgba(20, 17, 18, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+}
+
+.wall-intro__flag-reveal-img {
+  display: block;
+  width: clamp(6.5rem, 36vw, 10rem);
+  height: auto;
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.18),
+    0 8px 28px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+}
+
+.wall-intro--breaking .wall-intro__flag-reveal {
+  animation: wallFlagReveal 5s var(--ease-out-expo) 0.05s both;
+}
+
+.wall-intro--breaking .wall-intro__flag-reveal-img {
+  animation: wallFlagImgDiffuse 5s var(--ease-out-expo) 0.05s both;
+}
+
+.wall-intro--breaking .wall-intro__flag-frase {
+  animation: wallFlagFraseDiffuse 5s var(--ease-out-expo) 0.05s both;
+}
+
+@keyframes wallFlagReveal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15) rotate(-10deg);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -54%) scale(1.1) rotate(2deg);
+  }
+  20%,
+  55% {
+    opacity: 1;
+    transform: translate(-50%, -56%) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -64%) scale(0.98) rotate(2deg);
+  }
+}
+
+@keyframes wallFlagImgDiffuse {
+  0%,
+  54% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  72% {
+    opacity: 0.75;
+    filter: blur(2px);
+  }
+  88% {
+    opacity: 0.4;
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes wallFlagFraseDiffuse {
+  0%,
+  52% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.wall-intro--revealing .wall-intro__flag-reveal {
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
 .wall-intro__confetti {
@@ -627,28 +773,33 @@ button:focus-visible {
 }
 
 body.wall-intro-revealed .invitacion-envoltura {
-  animation: invitacionReveal 0.95s var(--ease-out-expo) both;
+  animation: invitacionConBandera 5s var(--ease-out-expo) 0.05s both;
 }
 
 body.wall-intro-revealed .music-player {
   z-index: 410;
 }
 
-@keyframes invitacionReveal {
+@keyframes invitacionConBandera {
   0% {
     opacity: 0;
-    transform: scale(0.97) translateY(14px);
-    filter: blur(8px);
+    filter: brightness(0.65);
+    transform: scale(0.98) translateY(10px);
   }
-  40% {
+  14% {
     opacity: 1;
-    transform: scale(1.01) translateY(-2px);
-    filter: blur(0);
+    filter: brightness(0.72);
+    transform: scale(0.99) translateY(4px);
+  }
+  55% {
+    opacity: 1;
+    filter: brightness(0.75);
+    transform: scale(0.995) translateY(2px);
   }
   100% {
     opacity: 1;
+    filter: brightness(1);
     transform: scale(1) translateY(0);
-    filter: blur(0);
   }
 }
 
