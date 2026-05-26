@@ -229,7 +229,7 @@ function initWallIntro() {
     }, 450);
   }
 
-  function crearLadrillo(row, col, isHalf) {
+  function crearLadrillo(row, col, isHalf, brickH) {
     const brick = document.createElement("span");
     brick.className = "wall-intro__brick";
     if (isHalf) brick.classList.add("wall-intro__brick--half");
@@ -245,11 +245,18 @@ function initWallIntro() {
     brick.style.setProperty("--brick-c1", `hsl(${hue} ${sat}% ${light + 8}%)`);
     brick.style.setProperty("--brick-c2", `hsl(${hue + 2} ${sat + 4}% ${light}%)`);
     brick.style.setProperty("--brick-c3", `hsl(${hue - 4} ${sat - 6}% ${light - 14}%)`);
-    brick.style.setProperty("--brick-tilt", `${(Math.random() - 0.5) * 1.2}deg`);
+    brick.style.setProperty("--brick-tilt", `${(Math.random() - 0.5) * 7.5}deg`);
+    brick.style.setProperty("--brick-nudge-x", `${(Math.random() - 0.5) * 14}px`);
+    brick.style.setProperty("--brick-nudge-y", `${(Math.random() - 0.5) * 10}px`);
+    brick.style.setProperty("--brick-scale", `${(0.9 + Math.random() * 0.16).toFixed(3)}`);
 
-    if (Math.random() < 0.22) brick.classList.add("wall-intro__brick--worn");
-    if (Math.random() < 0.12) brick.classList.add("wall-intro__brick--chip");
-    if (Math.random() < 0.08) brick.classList.add("wall-intro__brick--dark");
+    if (Math.random() < 0.06) brick.classList.add("wall-intro__brick--dark");
+
+    if (brickH && Math.random() < 0.45) {
+      const alto = Math.round(brickH * (0.84 + Math.random() * 0.22));
+      brick.style.height = `${alto}px`;
+      brick.style.flex = "0 1 auto";
+    }
 
     return brick;
   }
@@ -257,7 +264,7 @@ function initWallIntro() {
   function crearLadrillos() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const gap = 8;
+    const gap = 9;
     const padX = 16;
     const padY = 18;
     /** Proporción ancho : alto (ladrillo horizontal, no cuadrado) */
@@ -278,18 +285,27 @@ function initWallIntro() {
     for (let r = 0; r < rows; r += 1) {
       const rowEl = document.createElement("div");
       rowEl.className = "wall-intro__row";
-      if (r % 2 === 1) rowEl.classList.add("wall-intro__row--offset");
+      const esOffset = r % 2 === 1;
+      if (esOffset) rowEl.classList.add("wall-intro__row--offset");
 
-      if (r % 2 === 1) {
-        rowEl.appendChild(crearLadrillo(r, -1, true));
+      const rowGap = gap + Math.round((Math.random() - 0.5) * 6);
+      rowEl.style.gap = `${rowGap}px`;
+      rowEl.style.marginTop = `${(Math.random() - 0.5) * 9}px`;
+      if (esOffset) {
+        const shift = brickW * (0.34 + Math.random() * 0.28);
+        rowEl.style.setProperty("--row-shift", `${shift.toFixed(1)}px`);
+      }
+
+      if (esOffset) {
+        rowEl.appendChild(crearLadrillo(r, -1, true, brickH));
       }
 
       for (let c = 0; c < cols; c += 1) {
-        rowEl.appendChild(crearLadrillo(r, c, false));
+        rowEl.appendChild(crearLadrillo(r, c, false, brickH));
       }
 
-      if (r % 2 === 1) {
-        rowEl.appendChild(crearLadrillo(r, cols, true));
+      if (esOffset) {
+        rowEl.appendChild(crearLadrillo(r, cols, true, brickH));
       }
 
       bricksRoot.appendChild(rowEl);

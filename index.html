@@ -24,7 +24,7 @@
     -->
     <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
 
-    <!-- Intro: pared de ladrillo (toca el punto de fractura para entrar) -->
+    <!-- Intro: pared de ladrillo (toca la pared para entrar) -->
     <div
       id="wall-intro"
       class="wall-intro wall-intro--visible"
@@ -51,47 +51,84 @@
         <span class="wall-intro__burst"></span>
       </div>
       <div class="wall-intro__stage">
-        <p class="wall-intro__brand" id="wall-intro-title">NIMO</p>
         <button
           type="button"
           class="wall-intro__wall"
           id="wall-target"
-          aria-label="Toca la pared para descubrir la invitación"
+          aria-labelledby="wall-intro-title"
+          aria-describedby="wall-intro-desc"
         >
           <div class="wall-intro__mortar" aria-hidden="true"></div>
           <div class="wall-intro__bricks" id="wall-bricks" aria-hidden="true"></div>
-          <svg
-            class="wall-intro__crackmap"
-            viewBox="0 0 200 250"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              class="wall-intro__crack-line wall-intro__crack-line--a"
-              d="M 98 18 L 102 95 L 88 142 L 105 198 L 100 235"
-            />
-            <path
-              class="wall-intro__crack-line wall-intro__crack-line--b"
-              d="M 42 55 L 95 88 L 118 120 L 72 165 L 48 210"
-            />
-            <path
-              class="wall-intro__crack-line wall-intro__crack-line--c"
-              d="M 158 48 L 108 102 L 125 155 L 152 205"
-            />
-            <path
-              class="wall-intro__crack-line wall-intro__crack-line--hair"
-              d="M 65 30 L 82 75 M 135 70 L 115 110 M 55 180 L 90 195"
-            />
-          </svg>
-          <div class="wall-intro__cue" aria-hidden="true">
-            <span class="wall-intro__cue-ring"></span>
-            <span class="wall-intro__cue-ring wall-intro__cue-ring--2"></span>
-            <span class="wall-intro__cue-core"></span>
+          <div class="wall-intro__flag-wrap" id="wall-intro-title">
+            <svg
+              class="wall-intro__flag"
+              viewBox="0 0 128 88"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Bandera de Venezuela"
+            >
+              <defs>
+                <filter id="wall-flag-grain" x="-8%" y="-8%" width="116%" height="116%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="noise" />
+                  <feColorMatrix type="saturate" values="0.35" in="noise" result="grain" />
+                  <feBlend in="SourceGraphic" in2="grain" mode="multiply" />
+                </filter>
+                <linearGradient id="wall-flag-y" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c9ad4e" />
+                  <stop offset="100%" stop-color="#8f7830" />
+                </linearGradient>
+                <linearGradient id="wall-flag-b" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2a4568" />
+                  <stop offset="100%" stop-color="#152a42" />
+                </linearGradient>
+                <linearGradient id="wall-flag-r" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8f3a3e" />
+                  <stop offset="100%" stop-color="#5c2226" />
+                </linearGradient>
+              </defs>
+              <g class="wall-intro__flag-art" filter="url(#wall-flag-grain)">
+                <path
+                  fill="url(#wall-flag-y)"
+                  d="M4 3 L124 5 L123 28 L3 27 Z"
+                />
+                <path
+                  fill="url(#wall-flag-b)"
+                  d="M3 27 L123 28 L122 56 L4 55 Z"
+                />
+                <path
+                  fill="url(#wall-flag-r)"
+                  d="M4 55 L122 56 L121 82 L5 80 Z"
+                />
+                <path
+                  fill="none"
+                  stroke="rgba(20,12,10,0.22)"
+                  stroke-width="0.6"
+                  d="M4 27 L124 28 M4 55 L122 56"
+                />
+                <g fill="#d8cdb8" opacity="0.82">
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(-6,-4) scale(0.85)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(2,-9) scale(0.78)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(10,-7) scale(0.8)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(18,-4) scale(0.82)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(26,-1) scale(0.84)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(-2,2) scale(0.8)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(8,4) scale(0.83)" />
+                  <path d="M38 42 l2.2 -4.2 l2.4 4.1 l-4.5 -1.6 l4.5 -1.5 l-4.6 1.4 l2.5 4.1 l-2.5 -4.1 z" transform="translate(18,5) scale(0.81)" />
+                </g>
+                <path
+                  fill="none"
+                  stroke="rgba(40,28,22,0.35)"
+                  stroke-width="0.8"
+                  d="M5 80 Q32 84 64 82 T121 82"
+                />
+              </g>
+            </svg>
           </div>
           <div class="wall-intro__impact-host" id="wall-impact-host" aria-hidden="true"></div>
         </button>
         <span class="sr-only" id="wall-intro-desc"
-          >Pared de ladrillo con una fractura en el centro. Tócala para entrar.</span
+          >Pared de ladrillo con la bandera de Venezuela. Tócala para descubrir la invitación.</span
         >
       </div>
     </div>

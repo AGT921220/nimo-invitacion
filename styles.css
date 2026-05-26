@@ -74,6 +74,12 @@ html {
     transition: none !important;
     animation: none !important;
   }
+
+  .wall-intro__flag-wrap {
+    animation: none !important;
+    transform: translate(-50%, -50%) rotate(-2.5deg) !important;
+    filter: sepia(0.35) saturate(0.8) contrast(1.05) brightness(0.94);
+  }
 }
 
 .sr-only {
@@ -405,30 +411,6 @@ button:focus-visible {
   pointer-events: none;
 }
 
-.wall-intro__brand {
-  position: absolute;
-  z-index: 10;
-  left: 50%;
-  top: max(1.25rem, env(safe-area-inset-top));
-  transform: translateX(-50%);
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: rgba(255, 240, 220, 0.75);
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  opacity: 0.9;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.wall-intro--breaking .wall-intro__brand,
-.wall-intro--revealing .wall-intro__brand {
-  opacity: 0;
-}
-
 .wall-intro__wall {
   position: absolute;
   inset: 0;
@@ -454,8 +436,8 @@ button:focus-visible {
   transition: opacity 0.35s ease;
 }
 
-.wall-intro__wall:active .wall-intro__cue-core {
-  transform: scale(0.85);
+.wall-intro__wall:active .wall-intro__flag-wrap {
+  transform: translate(-50%, -50%) rotate(-2.5deg) scale(0.96);
 }
 
 .wall-intro__mortar {
@@ -475,27 +457,33 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--wall-gap, 8px);
-  padding: 9px 8px;
+  gap: var(--wall-gap, 9px);
+  padding: 6px 4px;
   background: #b0aaa0;
   overflow: hidden;
 }
 
 .wall-intro__row {
   display: flex;
-  flex: 0 0 var(--brick-h, 46px);
-  height: var(--brick-h, 46px);
+  flex: 0 0 auto;
   min-height: var(--brick-h, 46px);
-  gap: var(--wall-gap, 8px);
+  align-items: center;
+  gap: var(--wall-gap, 9px);
+}
+
+.wall-intro__row--offset {
+  margin-left: var(--row-shift, 0);
 }
 
 .wall-intro__brick {
   flex: 1;
   min-width: 0;
-  height: 100%;
+  height: var(--brick-h, 46px);
+  align-self: center;
   position: relative;
-  transform: rotate(var(--brick-tilt, 0deg));
-  border-radius: 3px 5px 4px 3px;
+  transform: translate(var(--brick-nudge-x, 0), var(--brick-nudge-y, 0))
+    rotate(var(--brick-tilt, 0deg)) scale(var(--brick-scale, 1));
+  border-radius: 2px 6px 3px 4px;
   background: linear-gradient(
       168deg,
       var(--brick-c1, #c45a4a) 0%,
@@ -519,21 +507,11 @@ button:focus-visible {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 5px,
-      rgba(0, 0, 0, 0.03) 5px,
-      rgba(0, 0, 0, 0.03) 6px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 8px,
-      rgba(255, 255, 255, 0.04) 8px,
-      rgba(255, 255, 255, 0.04) 9px
-    );
+  background: radial-gradient(
+    ellipse 90% 60% at 30% 25%,
+    rgba(255, 220, 200, 0.12),
+    transparent 65%
+  );
   pointer-events: none;
 }
 
@@ -551,25 +529,12 @@ button:focus-visible {
 }
 
 .wall-intro__brick--half {
-  flex: 0.48;
+  flex: 0 1 46%;
+  min-width: 2.5rem;
 }
 
 .wall-intro__brick--dark {
   filter: brightness(0.88) saturate(1.05);
-}
-
-.wall-intro__brick--worn {
-  filter: brightness(0.9) saturate(0.95);
-}
-
-.wall-intro__brick--worn::before {
-  background:
-    linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, transparent 50%),
-    repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(0, 0, 0, 0.04) 5px, rgba(0, 0, 0, 0.04) 6px);
-}
-
-.wall-intro__brick--chip {
-  clip-path: polygon(2% 0, 98% 2%, 96% 100%, 4% 98%);
 }
 
 .wall-intro--breaking .wall-intro__brick {
@@ -585,128 +550,61 @@ button:focus-visible {
     0 0 8px rgba(212, 175, 55, 0.35);
 }
 
-.wall-intro__crackmap {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
-}
-
-.wall-intro__crack-line {
-  fill: none;
-  stroke: rgba(35, 15, 12, 0.7);
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.wall-intro__crack-line--a {
-  stroke: rgba(25, 10, 8, 0.85);
-  stroke-width: 2.6;
-}
-
-.wall-intro__crack-line--b,
-.wall-intro__crack-line--c {
-  stroke-width: 1.5;
-  opacity: 0.85;
-}
-
-.wall-intro__crack-line--hair {
-  stroke-width: 0.9;
-  opacity: 0.55;
-}
-
-.wall-intro--breaking .wall-intro__crack-line {
-  animation: crackFlash 0.4s ease-out both;
-}
-
-@keyframes crackFlash {
-  0% { stroke: rgba(255, 245, 200, 1); stroke-width: 3.5px; filter: drop-shadow(0 0 6px rgba(245, 215, 142, 0.8)); }
-  100% { stroke: rgba(25, 10, 8, 0); opacity: 0; }
-}
-
-/* Señal visual: punto de fractura (sin texto) */
-.wall-intro__cue {
+.wall-intro__flag-wrap {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 44%;
   z-index: 5;
-  width: 0;
-  height: 0;
+  transform: translate(-50%, -50%) rotate(-2.5deg);
+  padding: 0.15rem 0.2rem 0.35rem;
+  pointer-events: none;
+  transition: transform 0.2s ease, opacity 0.35s ease;
+  animation: wallFlagFloat 7s ease-in-out infinite;
+  filter: sepia(0.42) saturate(0.72) contrast(1.08) brightness(0.92);
+}
+
+.wall-intro__flag-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    rgba(0, 0, 0, 0.35),
+    transparent 72%
+  );
   pointer-events: none;
 }
 
-.wall-intro__cue-core {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 252, 240, 1) 0%,
-    rgba(245, 215, 142, 0.85) 35%,
-    rgba(212, 175, 55, 0.4) 60%,
-    transparent 75%
-  );
+.wall-intro__flag {
+  display: block;
+  width: clamp(6.25rem, 32vw, 8.75rem);
+  height: auto;
+  border-radius: 1px;
   box-shadow:
-    0 0 14px rgba(255, 240, 200, 0.9),
-    0 0 32px rgba(212, 175, 55, 0.55),
-    0 0 48px rgba(181, 74, 60, 0.25);
-  animation: cuePulse 2s ease-in-out infinite;
+    2px 4px 12px rgba(0, 0, 0, 0.45),
+    inset 0 0 24px rgba(30, 20, 12, 0.2);
+  opacity: 0.94;
 }
 
-@keyframes cuePulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.75;
+.wall-intro__flag-art {
+  opacity: 0.97;
+}
+
+@keyframes wallFlagFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(-2.5deg);
   }
   50% {
-    transform: scale(1.35);
-    opacity: 1;
+    transform: translate(-50%, calc(-50% - 4px)) rotate(-1.2deg);
   }
 }
 
-.wall-intro__cue-ring {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
-  border-radius: 50%;
-  border: 1px solid rgba(245, 215, 142, 0.5);
-  animation: cueRing 2s ease-out infinite;
-}
-
-.wall-intro__cue-ring--2 {
-  animation-delay: 1s;
-  width: 54px;
-  height: 54px;
-  margin: -27px 0 0 -27px;
-  border-color: rgba(181, 74, 60, 0.35);
-}
-
-@keyframes cueRing {
-  0% {
-    transform: scale(0.5);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-}
-
-.wall-intro--breaking .wall-intro__cue {
+.wall-intro--breaking .wall-intro__flag-wrap,
+.wall-intro--revealing .wall-intro__flag-wrap {
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transform: translate(-50%, -50%) rotate(-2deg) scale(0.92);
 }
 
 .wall-intro__impact-host {
