@@ -74,12 +74,6 @@ html {
     transition: none !important;
     animation: none !important;
   }
-
-  .wall-intro__flag-wrap {
-    animation: none !important;
-    transform: translate(-50%, -50%) rotate(-2.5deg) !important;
-    filter: sepia(0.35) saturate(0.8) contrast(1.05) brightness(0.94);
-  }
 }
 
 .sr-only {
@@ -436,10 +430,6 @@ button:focus-visible {
   transition: opacity 0.35s ease;
 }
 
-.wall-intro__wall:active .wall-intro__flag-wrap {
-  transform: translate(-50%, -50%) rotate(-2.5deg) scale(0.96);
-}
-
 .wall-intro__mortar {
   position: absolute;
   inset: 0;
@@ -457,33 +447,27 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--wall-gap, 9px);
-  padding: 6px 4px;
+  gap: var(--wall-gap, 8px);
+  padding: 9px 8px;
   background: #b0aaa0;
   overflow: hidden;
 }
 
 .wall-intro__row {
   display: flex;
-  flex: 0 0 auto;
+  flex: 0 0 var(--brick-h, 46px);
+  height: var(--brick-h, 46px);
   min-height: var(--brick-h, 46px);
-  align-items: center;
-  gap: var(--wall-gap, 9px);
-}
-
-.wall-intro__row--offset {
-  margin-left: var(--row-shift, 0);
+  gap: var(--wall-gap, 8px);
 }
 
 .wall-intro__brick {
   flex: 1;
   min-width: 0;
-  height: var(--brick-h, 46px);
-  align-self: center;
+  height: 100%;
   position: relative;
-  transform: translate(var(--brick-nudge-x, 0), var(--brick-nudge-y, 0))
-    rotate(var(--brick-tilt, 0deg)) scale(var(--brick-scale, 1));
-  border-radius: 2px 6px 3px 4px;
+  transform: rotate(var(--brick-tilt, 0deg));
+  border-radius: 3px 5px 4px 3px;
   background: linear-gradient(
       168deg,
       var(--brick-c1, #c45a4a) 0%,
@@ -529,8 +513,7 @@ button:focus-visible {
 }
 
 .wall-intro__brick--half {
-  flex: 0 1 46%;
-  min-width: 2.5rem;
+  flex: 0.48;
 }
 
 .wall-intro__brick--dark {
@@ -548,63 +531,6 @@ button:focus-visible {
   box-shadow:
     0 0 16px rgba(245, 215, 142, 0.5),
     0 0 8px rgba(212, 175, 55, 0.35);
-}
-
-.wall-intro__flag-wrap {
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  z-index: 5;
-  transform: translate(-50%, -50%) rotate(-2.5deg);
-  padding: 0.15rem 0.2rem 0.35rem;
-  pointer-events: none;
-  transition: transform 0.2s ease, opacity 0.35s ease;
-  animation: wallFlagFloat 7s ease-in-out infinite;
-  filter: sepia(0.42) saturate(0.72) contrast(1.08) brightness(0.92);
-}
-
-.wall-intro__flag-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -18% -12%;
-  z-index: -1;
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    rgba(0, 0, 0, 0.35),
-    transparent 72%
-  );
-  pointer-events: none;
-}
-
-.wall-intro__flag {
-  display: block;
-  width: clamp(6.25rem, 32vw, 8.75rem);
-  height: auto;
-  border-radius: 1px;
-  box-shadow:
-    2px 4px 12px rgba(0, 0, 0, 0.45),
-    inset 0 0 24px rgba(30, 20, 12, 0.2);
-  opacity: 0.94;
-}
-
-.wall-intro__flag-art {
-  opacity: 0.97;
-}
-
-@keyframes wallFlagFloat {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) rotate(-2.5deg);
-  }
-  50% {
-    transform: translate(-50%, calc(-50% - 4px)) rotate(-1.2deg);
-  }
-}
-
-.wall-intro--breaking .wall-intro__flag-wrap,
-.wall-intro--revealing .wall-intro__flag-wrap {
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(-2deg) scale(0.92);
 }
 
 .wall-intro__impact-host {
